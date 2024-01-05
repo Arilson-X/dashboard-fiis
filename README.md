@@ -1,5 +1,6 @@
 # Dashboard de Fundos de Investimento Imobiliário
-<img src="{BadgeURLHere}" />
+<img src="https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue"/> <img src="https://img.shields.io/badge/Pandas-2C2D72?style=for-the-badge&logo=pandas&logoColor=white" /> <img src="https://img.shields.io/badge/Plotly-239120?style=for-the-badge&logo=plotly&logoColor=white" /> <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white"/>
+
 Esta é uma dashboard de fundos imobiliários voltada a demonstrar de forma simples informações sobre fundos imobiliários. Está dashboard é desenvolvida totalmente em Python, fugindo da utilização de ferramentas convencionais.
 
 ## Este projeto é dividido em 3 partes:
