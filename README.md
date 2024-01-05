@@ -1,4 +1,5 @@
 # Dashboard de Fundos de Investimento Imobiliário
+![Powered by Pandas](https://github.com/pandas-dev/pandas/raw/main/web/pandas/static/img/pandas_mark.svg)
 Esta é uma dashboard de fundos imobiliários voltada a demonstrar de forma simples informações sobre fundos imobiliários. Está dashboard é desenvolvida totalmente em Python, fugindo da utilização de ferramentas convencionais.
 
 ## Este projeto é dividido em 3 partes:
