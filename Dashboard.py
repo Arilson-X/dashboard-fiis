@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import plotly.express as px
 import streamlit as st
+import Components
 
 # Define a url inicial onde será coletado os dados
 url = 'https://www.fundamentus.com.br/fii_resultado.php'
@@ -162,4 +163,79 @@ min_Aluguel_m2 = df_fiis['Aluguel por m2'].min()
 max_Cap_Rate = df_fiis['Cap Rate'].max()
 min_Cap_Rate = df_fiis['Cap Rate'].min()
 max_Vacancia_Media = df_fiis['Vacância Média'].max()
-min_Vacancia_Media = df_fiis['Vacância Média'].max()
+min_Vacancia_Media = df_fiis['Vacância Média'].min()
+
+metricas = {
+    'cotacao':[min_Cotacao,max_Cotacao],
+    'ffo_yield':[min_FFO_yield,max_FFO_yield],
+    'dividend_yield':[min_Dividend_Yield,max_Dividend_Yield],
+    'p_vp':[min_P_VP,max_P_VP],
+    'valor_mercado':[min_Valor_Mercado,max_Valor_Mercado],
+    'liquidez':[min_liquidez,max_liquidez],
+    'qtd_imoveis':[min_Qtd_Imoveis,max_Qtd_Imoveis],
+    'preco_m2':[min_Preco_m2,max_Preco_m2],
+    'aluguel_m2':[min_Aluguel_m2,max_Aluguel_m2],
+    'cap_rate':[min_Cap_Rate,max_Cap_Rate],
+    'vacancia':[min_Vacancia_Media,max_Vacancia_Media]
+}
+
+number_columns = list(df_fiis.columns)
+number_columns.remove('Papel')
+number_columns.remove('Segmento')
+
+# Estruturando Dashboard
+st.set_page_config(page_icon="chart_with_upwards_trend",
+                   layout="wide",
+                   page_title="Dashboard FII's")
+
+st.title("Dashboard de Fundos de Investimentos Imobiliários :chart_with_upwards_trend:")
+
+filtros = Components.filter(papeis,segmentos,metricas)
+
+f_papel = filtros['Papel']
+f_segmento = filtros['Segmento']
+f_cotacao = filtros['Cotacao']
+f_dividend = filtros['Dividend']
+f_ffo_yield = filtros['FFO Yield']
+f_p_vp = filtros['P/VP']
+f_valor_mercado = filtros['Valor Mercado']
+f_liquidez = filtros['Liquidez']
+f_qtd_imoveis = filtros['Qtd Imoveis']
+f_preco_m2 = filtros['Preco M2']
+f_aluguel_m2 = filtros['Aluguel M2']
+f_cap_rate = filtros['Cap Rate']
+f_vacancia = filtros['Vacancia']
+
+query = '''
+Papel in @f_papel and \
+Segmento in @f_segmento and \
+@f_cotacao[0] <= `Cotação` <= @f_cotacao[1] and \
+@f_dividend[0] <= `Dividend Yield` <= @f_dividend[1] and \
+@f_ffo_yield[0] <= `FFO Yield` <= @f_ffo_yield[1] and \
+@f_p_vp[0] <= `P/VP` <= @f_p_vp[1] and \
+@f_valor_mercado[0] <= `Valor de Mercado` <= @f_valor_mercado[1] and \
+@f_liquidez[0] <= `Liquidez` <= @f_liquidez[1] and \
+@f_qtd_imoveis[0] <= `Qtd de imóveis` <= @f_qtd_imoveis[1] and \
+@f_preco_m2[0] <= `Preço do m2` <= @f_preco_m2[1] and \
+@f_aluguel_m2[0] <= `Aluguel por m2` <= @f_aluguel_m2[1] and \
+@f_cap_rate[0] <= `Cap Rate` <= @f_cap_rate[1] and \
+@f_vacancia[0] <= `Vacância Média` <= @f_vacancia[1]
+'''
+
+dados_filtrados = df_fiis.query(query)
+
+coluna1, coluna2 = st.columns(2)
+with coluna1:
+    col_1,col_2 = st.columns(2)
+    with col_1:
+        variavel_1 = st.selectbox('Variável x',number_columns)
+    with col_2:   
+        variavel_2 = st.selectbox('Variável y',number_columns)
+    st.plotly_chart(Components.scatter_graph(dados_filtrados,variavel_1,variavel_2),use_container_width= True)
+with coluna2:
+    variavel_3 = st.selectbox('Variável ',number_columns)
+    st.plotly_chart(Components.boxplot_graph(dados_filtrados,variavel_3), use_container_width=True)
+
+variavel_4 = st.selectbox('Variável 3',number_columns)
+st.plotly_chart(Components.histogram_graph(dados_filtrados,variavel_4), use_container_width=True)
+
