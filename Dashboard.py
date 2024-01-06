@@ -1,9 +1,11 @@
 from time import sleep
 from io import StringIO
-import pandas as pd
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 from bs4 import BeautifulSoup
+import pandas as pd
+import plotly.express as px
+import streamlit as st
 
 # Define a url inicial onde será coletado os dados
 url = 'https://www.fundamentus.com.br/fii_resultado.php'
@@ -121,9 +123,18 @@ def get_fiis():
 
     return(df_fiis)
 
+def formata_numero(valor, prefixo = '', porcentagem = False):
+    if porcentagem:
+        return f'{prefixo} {valor:.2f}%'
+    else:
+        for unidade in ['', 'mil']:
+            if valor <1000:
+                return f'{prefixo} {valor:.2f} {unidade}'
+            valor /= 1000
+        return f'{prefixo} {valor:.2f} milhões'
+
 df_fiis = get_fiis()
 df_fiis = formata_coluna(df_fiis)
-
 
 # Parâmetros de Filtros
 papeis = list(df_fiis['Papel'])
@@ -152,7 +163,3 @@ max_Cap_Rate = df_fiis['Cap Rate'].max()
 min_Cap_Rate = df_fiis['Cap Rate'].min()
 max_Vacancia_Media = df_fiis['Vacância Média'].max()
 min_Vacancia_Media = df_fiis['Vacância Média'].max()
-print(f'Cotação Máxima {max_Cotacao}')
-print(f'Cotação Mínima {min_Cotacao}')
-print(f'FFO Yield Máximo {max_FFO_yield}')
-print(f'FFO Yield Mínimo {min_FFO_yield}')
