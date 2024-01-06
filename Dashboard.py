@@ -1,4 +1,5 @@
 from time import sleep
+from io import StringIO
 import pandas as pd
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
@@ -116,9 +117,42 @@ def get_fiis():
     str_table = str(table)
     str_table = str_table.replace("%","")
     str_table = str_table.replace(".","")
-    df_fiis = pd.read_html(str_table,decimal=',')[0]
+    df_fiis = pd.read_html(StringIO(str_table),decimal=',')[0]
 
     return(df_fiis)
 
 df_fiis = get_fiis()
 df_fiis = formata_coluna(df_fiis)
+
+
+# Parâmetros de Filtros
+papeis = list(df_fiis['Papel'])
+segmentos = list(df_fiis['Segmento'].unique())
+
+# Métricas
+max_Cotacao = df_fiis['Cotação'].max()
+min_Cotacao = df_fiis['Cotação'].min()
+max_FFO_yield = df_fiis['FFO Yield'].max()
+min_FFO_yield = df_fiis['FFO Yield'].min()
+max_Dividend_Yield = df_fiis['Dividend Yield'].max()
+min_Dividend_Yield = df_fiis['Dividend Yield'].min()
+max_P_VP = df_fiis['P/VP'].max()
+min_P_VP = df_fiis['P/VP'].min()
+max_Valor_Mercado = df_fiis['Valor de Mercado'].max()
+min_Valor_Mercado = df_fiis['Valor de Mercado'].min()
+max_liquidez = df_fiis['Liquidez'].max()
+min_liquidez = df_fiis['Liquidez'].min()
+max_Qtd_Imoveis = df_fiis['Qtd de imóveis'].max()
+min_Qtd_Imoveis = df_fiis['Qtd de imóveis'].min()
+max_Preco_m2 = df_fiis['Preço do m2'].max()
+min_Preco_m2 = df_fiis['Preço do m2'].min()
+max_Aluguel_m2 = df_fiis['Aluguel por m2'].max()
+min_Aluguel_m2 = df_fiis['Aluguel por m2'].min()
+max_Cap_Rate = df_fiis['Cap Rate'].max()
+min_Cap_Rate = df_fiis['Cap Rate'].min()
+max_Vacancia_Media = df_fiis['Vacância Média'].max()
+min_Vacancia_Media = df_fiis['Vacância Média'].max()
+print(f'Cotação Máxima {max_Cotacao}')
+print(f'Cotação Mínima {min_Cotacao}')
+print(f'FFO Yield Máximo {max_FFO_yield}')
+print(f'FFO Yield Mínimo {min_FFO_yield}')
