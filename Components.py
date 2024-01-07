@@ -9,27 +9,27 @@ def filter(papeis, segmentos, metricas):
     with st.sidebar.expander('Segmentos'):
         segmento = st.multiselect('Segmentos', segmentos, segmentos)
     with st.sidebar.expander('Faixa de Cotação'):
-        cotacao = st.slider('Cotação', metricas["cotacao"][0],metricas["cotacao"][1],(metricas["cotacao"]),20.00)
+        cotacao = st.slider('Cotação', 1.00,2000.00,(1.00,2000.00),10.00)
     with st.sidebar.expander('Faixa de FFO Yield'):
-        ffo_yield = st.slider('FFO Yield', metricas["ffo_yield"][0],metricas["ffo_yield"][1],(metricas["ffo_yield"]),20.00)
+        ffo_yield = st.slider('FFO Yield', 0.00,30.00,(0.00,30.00),1.00)
     with st.sidebar.expander('Faixa de Dividend Yield'):
-        dividend_yield = st.slider('Dividend Yield', metricas["dividend_yield"][0],metricas["dividend_yield"][1],(metricas["dividend_yield"]),1.00)
+        dividend_yield = st.slider('Dividend Yield', 0.00,30.00,(0.00,30.00),1.00)
     with st.sidebar.expander('Faixa de P/VP'):
-        p_vp = st.slider('P/VP', metricas["p_vp"][0],metricas["p_vp"][1],(metricas["p_vp"]),0.05)
+        p_vp = st.slider('P/VP', 0.00,3.00,(0.00,3.00),0.05)
     with st.sidebar.expander('Faixa Valor de Mercado'):
-        valor_mercado = st.slider('Valor de Mercado',metricas["valor_mercado"][0],metricas["valor_mercado"][1],(metricas["valor_mercado"]),100000)
+        valor_mercado = st.slider('Valor de Mercado',0,100000000000,(0,100000000000),10000000)
     with st.sidebar.expander('Faixa de Liquidez'):
         liquidez = st.slider('Liquidez',metricas["liquidez"][0],metricas["liquidez"][1],(metricas["liquidez"]),100000)
     with st.sidebar.expander('Faixa de Quantidade de Imóveis'):
-        qtd_imoveis = st.slider('Quantidade de Imóveis',metricas["qtd_imoveis"][0],metricas["qtd_imoveis"][1],(metricas["qtd_imoveis"]),1)
+        qtd_imoveis = st.slider('Quantidade de Imóveis',0,100,(0,100),1)
     with st.sidebar.expander('Faixa de Preço M2'):
-        preco_m2 = st.slider('Preço M2',metricas["preco_m2"][0],metricas["preco_m2"][1],(metricas["preco_m2"]),10)
+        preco_m2 = st.slider('Preço M2',0,30000,(0,30000),500)
     with st.sidebar.expander('Faixa de Aluguel M2'):
-        aluguel_m2 = st.slider('Aluguel M2',metricas["aluguel_m2"][0],metricas["aluguel_m2"][1],(metricas["aluguel_m2"]),10)
+        aluguel_m2 = st.slider('Aluguel M2',0,2000,(0,2000),100)
     with st.sidebar.expander('Faixa de Cap Rate'):
-        cap_rate = st.slider('Cap Rate',metricas["cap_rate"][0],metricas["cap_rate"][1],(metricas["cap_rate"]),10.00)
+        cap_rate = st.slider('Cap Rate',0.00,30.00,(0.00,30.00),1.00)
     with st.sidebar.expander('Faixa de Vacância'):
-        vacancia = st.slider('Vacância',metricas["vacancia"][0],metricas["vacancia"][1],(metricas["vacancia"]),5.00)
+        vacancia = st.slider('Vacância',0.00,100.00,(0.00,100.00),1.00)
     return {
         'Papel' : papel,
         'Segmento' : segmento,

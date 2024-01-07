@@ -188,8 +188,9 @@ st.set_page_config(page_icon="chart_with_upwards_trend",
                    layout="wide",
                    page_title="Dashboard FII's")
 
-st.title("Dashboard de Fundos de Investimentos Imobiliários :chart_with_upwards_trend:")
-
+st.header("Dashboard de Fundos de Investimentos Imobiliários :chart_with_upwards_trend:",divider="blue")
+st.markdown('> "Não faço isso pelo dinheiro. É a diversão de fazer dinheiro e vê-lo crescer" - Warren Buffet')
+st.divider()
 filtros = Components.filter(papeis,segmentos,metricas)
 
 f_papel = filtros['Papel']
@@ -222,20 +223,22 @@ Segmento in @f_segmento and \
 @f_vacancia[0] <= `Vacância Média` <= @f_vacancia[1]
 '''
 
+aba1, aba2, aba3 = st.tabs(['Métricas','Estatísticas','-----'])
+
 dados_filtrados = df_fiis.query(query)
+with aba2:
+    coluna1, coluna2 = st.columns(2)
+    with coluna1:
+        col_1,col_2 = st.columns(2)
+        with col_1:
+            variavel_1 = st.selectbox('Variável x',number_columns)
+        with col_2:   
+            variavel_2 = st.selectbox('Variável y',number_columns)
+        st.plotly_chart(Components.scatter_graph(dados_filtrados,variavel_1,variavel_2),use_container_width= True)
+    with coluna2:
+        variavel_3 = st.selectbox('Variável ',number_columns)
+        st.plotly_chart(Components.boxplot_graph(dados_filtrados,variavel_3), use_container_width=True)
 
-coluna1, coluna2 = st.columns(2)
-with coluna1:
-    col_1,col_2 = st.columns(2)
-    with col_1:
-        variavel_1 = st.selectbox('Variável x',number_columns)
-    with col_2:   
-        variavel_2 = st.selectbox('Variável y',number_columns)
-    st.plotly_chart(Components.scatter_graph(dados_filtrados,variavel_1,variavel_2),use_container_width= True)
-with coluna2:
-    variavel_3 = st.selectbox('Variável ',number_columns)
-    st.plotly_chart(Components.boxplot_graph(dados_filtrados,variavel_3), use_container_width=True)
-
-variavel_4 = st.selectbox('Variável 3',number_columns)
-st.plotly_chart(Components.histogram_graph(dados_filtrados,variavel_4), use_container_width=True)
+    variavel_4 = st.selectbox('Variável 3',number_columns)
+    st.plotly_chart(Components.histogram_graph(dados_filtrados,variavel_4), use_container_width=True)
 
