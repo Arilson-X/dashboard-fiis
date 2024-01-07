@@ -226,6 +226,9 @@ Segmento in @f_segmento and \
 aba1, aba2, aba3 = st.tabs(['Métricas','Estatísticas','-----'])
 
 dados_filtrados = df_fiis.query(query)
+with aba1:
+    coluna1, coluna2 = st.columns(2)
+
 with aba2:
     coluna1, coluna2 = st.columns(2)
     with coluna1:
